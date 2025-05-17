@@ -7,15 +7,15 @@ def test_tower(target):
     num_outputs = 32
     i = 0
     assert len(target.layers) == 3, f"Wrong number of layers. Expected 3 but got {len(target.layers)}"
-    expected = [[Dense, [None, 256], relu],
-                [Dense, [None, 128], relu],
-                [Dense, [None, num_outputs], linear]]
+    expected = [[Dense, 256, relu],
+                [Dense, 128, relu],
+                [Dense, num_outputs, linear]]
 
     for layer in target.layers:
         assert type(layer) == expected[i][0], \
             f"Wrong type in layer {i}. Expected {expected[i][0]} but got {type(layer)}"
-        assert layer.output.shape.as_list() == expected[i][1], \
-            f"Wrong number of units in layer {i}. Expected {expected[i][1]} but got {layer.output.shape.as_list()}"
+        assert layer.units == expected[i][1], \
+            f"Wrong number of units in layer {i}. Expected {expected[i][1]} but got {layer.units}"
         assert layer.activation == expected[i][2], \
             f"Wrong activation in layer {i}. Expected {expected[i][2]} but got {layer.activation}"
         i = i + 1
